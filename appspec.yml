@@ -1,0 +1,20 @@
+version: 0.0
+os: linux
+files:
+  - source: /myapp
+    destination: /var/www/html/myapp
+  - source: /configs/myapp
+    destination: /etc/nginx/sites-available
+  - source: /configs/myapp.conf
+    destination: /etc/init
+
+hooks:
+  BeforeInstall:
+    - location: scripts/delete.sh
+      timeout: 180
+      runas: root
+
+  AfterInstall:
+    - location: scripts/setup.sh
+      timeout: 180
+      runas: root
